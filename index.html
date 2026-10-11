@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYSTEM ERROR - GALAXIA SYSTEM</title>
     <style>
+        /* 共用色彩設定，方便統一調整頁面的主題 */
         :root {
             --sao-cyan: #55e9ff;
             --sao-blue: #8d6cff;
@@ -14,12 +15,14 @@
             --sao-gold: #e9d89a;
         }
 
+        /* 清除瀏覽器預設間距，並統一元素尺寸計算方式 */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        /* 頁面背景、字體與主要內容置中 */
         body {
             min-height: 100vh;
             min-height: 100svh;
@@ -39,6 +42,7 @@
             padding: 48px;
         }
 
+        /* 疊加掃描線與淡淡的中央分隔光線 */
         body::before {
             content: "";
             position: fixed;
@@ -51,6 +55,7 @@
             pointer-events: none;
         }
 
+        /* 桌面版採左右雙欄：角色圖在左、訊息框在右 */
         .container {
             position: relative;
             z-index: 2;
@@ -61,6 +66,7 @@
             width: min(1240px, 100%);
         }
 
+        /* 角色圖片大小、光影與漂浮動畫 */
         .yui-character {
             display: block;
             width: 100%;
@@ -71,11 +77,13 @@
             animation: float 4s ease-in-out infinite;
         }
 
+        /* 角色上下輕微浮動 */
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(0.5deg); }
         }
 
+        /* 半透明錯誤訊息面板與斜角外框 */
         .error-box {
             background: var(--sao-dark-bg);
             border: 1px solid rgba(233, 216, 154, 0.65);
@@ -92,6 +100,7 @@
             );
         }
 
+        /* 面板右下角的金色裝飾線 */
         .error-box::after {
             content: "";
             position: absolute;
@@ -103,6 +112,7 @@
             border-right: 2px solid var(--sao-gold);
         }
 
+        /* 錯誤主標題 */
         .error-code {
             font-size: clamp(2rem, 3vw, 3rem);
             color: #ffffff;
@@ -113,6 +123,7 @@
             text-shadow: 0 0 28px rgba(141, 108, 255, 0.62);
         }
 
+        /* 中英文錯誤副標題 */
         .error-title {
             font-size: clamp(1rem, 1.6vw, 1.2rem);
             color: var(--sao-cyan);
@@ -122,6 +133,7 @@
             line-height: 1.6;
         }
 
+        /* 錯誤說明文字與段落間距 */
         .error-desc {
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.82);
@@ -133,12 +145,14 @@
             margin-top: 14px;
         }
 
+        /* 按鈕水平排列，空間不足時自動換行 */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
         }
 
+        /* 按鈕共用樣式 */
         .sao-btn {
             display: inline-flex;
             align-items: center;
@@ -157,6 +171,7 @@
             clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
         }
 
+        /* 滑鼠移到按鈕時的反白效果 */
         .sao-btn:hover {
             background: var(--sao-gold);
             color: #11101a;
@@ -164,15 +179,18 @@
             transform: translateY(-2px);
         }
 
+        /* 主要按鈕使用金色底 */
         .sao-btn.primary {
             background: var(--sao-gold);
             color: #11101a;
         }
 
+        /* 主要按鈕的滑鼠移入效果 */
         .sao-btn.primary:hover {
             background: #fff0b4;
         }
 
+        /* 平板與窄螢幕改為上下排列 */
         @media (max-width: 850px) {
             body {
                 padding: 48px 24px 32px;
@@ -195,6 +213,7 @@
             }
         }
 
+        /* 手機版縮小間距，並讓按鈕垂直排列 */
         @media (max-width: 520px) {
             body {
                 padding: 44px 18px 24px;
@@ -233,6 +252,7 @@
             }
         }
 
+        /* 使用者偏好減少動態效果時，停用動畫與轉場 */
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
