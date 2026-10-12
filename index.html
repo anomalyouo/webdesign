@@ -171,7 +171,7 @@
             align-items: center;
             justify-content: center;
             min-height: 50px;
-            --sao-btn-fill: rgba(255, 255, 255, 0.035);
+            --sao-btn-fill: var(--sao-dark-bg);
             position: relative;
             isolation: isolate;
             background: var(--sao-cyan);
@@ -192,11 +192,16 @@
             content: "";
             position: absolute;
             inset: 1px;
-            z-index: -1;
+            z-index: 0;
             background: var(--sao-btn-fill);
             clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
             pointer-events: none;
             transition: background-color 0.3s ease;
+        }
+
+        .sao-btn span {
+            position: relative;
+            z-index: 1;
         }
 
         /* 滑鼠移到按鈕時的反白效果 */
@@ -289,8 +294,8 @@
             </div>
             
             <div class="btn-group">
-                <a href="https://fd.sao-game.jp/" class="sao-btn">返回首頁</a>
-                <button class="sao-btn" onclick="location.reload();">重新整理</button>
+                <a href="https://fd.sao-game.jp/" class="sao-btn"><span>返回首頁</span></a>
+                <button class="sao-btn" onclick="location.reload();"><span>重新整理</span></button>
             </div>
         </div>
     </div>
