@@ -11,11 +11,10 @@
         /* 共用色彩設定，方便統一調整頁面的主題 */
         :root {
             --sao-cyan: #55e9ff;
-            --sao-blue: #8d6cff;
             --sao-glow: rgba(85, 233, 255, 0.55);
             --sao-dark-bg: rgba(5, 7, 18, 0.82);
-            --sao-border: #d8c17b;
-            --sao-gold: #e9d89a;
+            --sao-frame: rgba(85, 233, 255, 0.78);
+            --sao-copy: rgba(255, 255, 255, 0.86);
         }
 
         /* 清除瀏覽器預設間距，並統一元素尺寸計算方式 */
@@ -86,33 +85,44 @@
             50% { transform: translateY(-10px) rotate(0.5deg); }
         }
 
-        /* 半透明錯誤訊息面板與斜角外框 */
+        /* 半透明錯誤面板搭配原版的四角框線 */
         .error-box {
             background: var(--sao-dark-bg);
-            border: 1px solid rgba(233, 216, 154, 0.65);
+            border: 1px solid rgba(85, 233, 255, 0.24);
             box-shadow: 0 18px 80px rgba(0, 0, 0, 0.48), inset 0 0 45px rgba(88, 70, 156, 0.12);
             backdrop-filter: blur(12px);
             padding: clamp(36px, 5vw, 64px);
             position: relative;
-            text-align: left;
-            clip-path: polygon(
-                0 24px, 24px 0,
-                100% 0,
-                100% calc(100% - 24px), calc(100% - 24px) 100%,
-                0 100%
-            );
         }
 
-        /* 面板右下角的金色裝飾線 */
+        /* 四角 L 形裝飾沿用原版 frame 元件的線條語彙 */
+        .error-box::before,
         .error-box::after {
             content: "";
             position: absolute;
-            bottom: 8px;
-            right: 8px;
-            width: 28px;
-            height: 28px;
-            border-bottom: 2px solid var(--sao-gold);
-            border-right: 2px solid var(--sao-gold);
+            inset: 8px;
+            pointer-events: none;
+            background-repeat: no-repeat;
+        }
+
+        .error-box::before {
+            background-image:
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame));
+            background-size: 18px 2px, 2px 18px;
+            background-position: left top, left top, right top, right top;
+        }
+
+        .error-box::after {
+            background-image:
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame)),
+                linear-gradient(var(--sao-frame), var(--sao-frame));
+            background-size: 18px 2px, 2px 18px;
+            background-position: left bottom, left bottom, right bottom, right bottom;
         }
 
         /* 錯誤主標題 */
@@ -123,7 +133,7 @@
             letter-spacing: 0.05em;
             line-height: 1.08;
             margin-bottom: 18px;
-            text-shadow: 0 0 28px rgba(141, 108, 255, 0.62);
+            text-shadow: 0 0 28px var(--sao-glow);
         }
 
         /* 中英文錯誤副標題 */
@@ -139,7 +149,7 @@
         /* 錯誤說明文字與段落間距 */
         .error-desc {
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.82);
+            color: var(--sao-copy);
             line-height: 1.8;
             margin-bottom: 34px;
         }
@@ -161,9 +171,12 @@
             align-items: center;
             justify-content: center;
             min-height: 50px;
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(233, 216, 154, 0.75);
-            color: #ffffff;
+            --sao-btn-fill: rgba(255, 255, 255, 0.035);
+            position: relative;
+            isolation: isolate;
+            background: var(--sao-cyan);
+            border: 0;
+            color: rgba(255, 255, 255, 0.72);
             padding: 12px 24px;
             font-size: 0.95rem;
             font-weight: bold;
@@ -174,23 +187,24 @@
             clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
         }
 
+        /* 內層背景向內裁切一像素，保留斜角外框 */
+        .sao-btn::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            z-index: -1;
+            background: var(--sao-btn-fill);
+            clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+            pointer-events: none;
+            transition: background-color 0.3s ease;
+        }
+
         /* 滑鼠移到按鈕時的反白效果 */
         .sao-btn:hover {
-            background: var(--sao-gold);
+            --sao-btn-fill: var(--sao-cyan);
             color: #11101a;
-            box-shadow: 0 0 24px rgba(233, 216, 154, 0.32);
+            box-shadow: 0 0 24px var(--sao-glow);
             transform: translateY(-2px);
-        }
-
-        /* 主要按鈕使用金色底 */
-        .sao-btn.primary {
-            background: var(--sao-gold);
-            color: #11101a;
-        }
-
-        /* 主要按鈕的滑鼠移入效果 */
-        .sao-btn.primary:hover {
-            background: #fff0b4;
         }
 
         /* 平板與窄螢幕改為上下排列 */
@@ -232,16 +246,6 @@
                 padding: 42px 24px 30px;
             }
 
-            .error-box::before {
-                left: 18px;
-                font-size: 8px;
-                letter-spacing: 1px;
-            }
-
-            .error-title {
-                line-height: 1.6;
-            }
-
             .error-desc {
                 font-size: 0.98rem;
             }
@@ -262,7 +266,6 @@
             *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
-                scroll-behavior: auto !important;
                 transition-duration: 0.01ms !important;
             }
         }
@@ -272,7 +275,7 @@
 
     <div class="container">
         <!-- 結衣精靈角色圖 -->
-        <img src="imgs/Yui_rbg.png" alt="Yui Navigation Sprite" class="yui-character">
+        <img src="imgs/Yui_rbg.png" alt="Yui Navigation Sprite" class="yui-character" width="1335" height="1178">
 
         <!-- 系統錯誤對話框 -->
         <div class="error-box">
@@ -286,7 +289,7 @@
             </div>
             
             <div class="btn-group">
-                <a href="https://fd.sao-game.jp/" class="sao-btn primary">返回首頁</a>
+                <a href="https://fd.sao-game.jp/" class="sao-btn">返回首頁</a>
                 <button class="sao-btn" onclick="location.reload();">重新整理</button>
             </div>
         </div>
